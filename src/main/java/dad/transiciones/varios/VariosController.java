@@ -10,6 +10,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -19,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -28,12 +30,15 @@ public class VariosController implements Initializable {
 	
     @FXML
     private VBox view;
-
+    
     @FXML
     private Label holaLabel;
 
     @FXML
     private Button animacion1Button, animacion2Button, animacion3Button;
+    
+    @FXML
+    private Slider slider;
 
 	public VariosController() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/VariosView.fxml"));
@@ -65,15 +70,31 @@ public class VariosController implements Initializable {
     		this.animation.stop();
     	}
 
-    	KeyValue kv1 = new KeyValue(holaLabel.opacityProperty(), 0.0);
-    	KeyValue kv2 = new KeyValue(holaLabel.translateXProperty(), 100.0);
-    	KeyValue kv3 = new KeyValue(animacion1Button.rotateProperty(), 360.0);
-    	KeyFrame kf1 = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3);
+    	KeyFrame kf1 = new KeyFrame(
+    			Duration.ZERO, 
+    			new KeyValue(holaLabel.translateXProperty(), 0.0),
+    			new KeyValue(holaLabel.translateYProperty(), 0.0),
+    			new KeyValue(slider.valueProperty(), 0)
+    			);
+
+    	KeyFrame kf2 = new KeyFrame(
+    			Duration.seconds(0.5), 
+    			new KeyValue(holaLabel.translateXProperty(), 100.0),
+    			new KeyValue(holaLabel.translateYProperty(), -50.0),
+    			new KeyValue(slider.valueProperty(), 100)
+    			);
+    	
+    	KeyFrame kf3 = new KeyFrame(
+    			Duration.seconds(0.75), 
+    			new KeyValue(holaLabel.translateXProperty(), 80.0),
+    			new KeyValue(holaLabel.translateYProperty(), 20.0),
+    			new KeyValue(slider.valueProperty(), 75)
+    			);
     	
     	Timeline timeline = new Timeline();
     	timeline.setAutoReverse(true);
-    	timeline.setCycleCount(2);
-    	timeline.getKeyFrames().addAll(kf1);
+    	timeline.setCycleCount(Animation.INDEFINITE);
+    	timeline.getKeyFrames().addAll(kf1, kf2, kf3);
     	timeline.play();
     	
     	this.animation = timeline;
@@ -86,16 +107,18 @@ public class VariosController implements Initializable {
     	}
 
     	FadeTransition fade = new FadeTransition();
-    	fade.setDuration(Duration.seconds(1));
+    	fade.setDuration(Duration.seconds(7));
     	fade.setFromValue(1.0);
     	fade.setToValue(0.0);
     	
     	TranslateTransition translate = new TranslateTransition();
-    	translate.setDuration(Duration.seconds(1));
+    	translate.setDuration(Duration.millis(5000));
     	translate.setFromY(0.0);
-    	translate.setToY(-50.0);
+    	translate.setToY(-150.0);
+    	translate.setInterpolator(Interpolator.EASE_BOTH);
 
-    	SequentialTransition secuencia = new SequentialTransition();
+//    	SequentialTransition secuencia = new SequentialTransition();
+    	ParallelTransition secuencia = new ParallelTransition();
     	secuencia.setAutoReverse(true);
     	secuencia.setCycleCount(1);
     	secuencia.setNode(holaLabel);
