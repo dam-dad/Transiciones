@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
+
+<BorderPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+	<bottom>
+		<HBox alignment="BASELINE_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+			<children>
+            <Label fx:id="estadoLabel" text="-" />
+				<Button fx:id="playButton" mnemonicParsing="false" onAction="#onPlayButtonAction" text="Play" />
+				<Button fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseButtonAction" text="Pause" />
+            <Button fx:id="stopButton" layoutX="273.0" layoutY="10.0" mnemonicParsing="false" onAction="#onStopButtonAction" text="Stop" />
+			</children>
+		</HBox>
+	</bottom>
+	<padding>
+		<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+	</padding>
+   <center>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Polygon fx:id="poligonoShape" fill="DODGERBLUE" scaleX="2.0" scaleY="2.0" scaleZ="2.0" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+            </Polygon>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
